@@ -56,7 +56,7 @@ public class Broneering {
         return null;
     }
 
-    public static void teeBroneering(String treeninguNimi, Liige liige, List<Treening> trennid, List<Broneering> bronnid) {
+    public static String teeBroneering(String treeninguNimi, Liige liige, List<Treening> trennid, List<Broneering> bronnid) {
         Treening treening = Treening.leiaTreening(treeninguNimi, trennid);
         int vabuKohti = treening.getVabuKohti();
         if (vabuKohti > 0) {
@@ -64,9 +64,9 @@ public class Broneering {
             bronnid.add(broneering);
             vabuKohti--;
             treening.setVabuKohti(vabuKohti);
-            System.out.println("Broneering treeningusse " + broneering.getTreening().getNimi() + " edukalt tehtud!");
+            return ("Broneering treeningusse " + broneering.getTreening().getNimi() + " edukalt tehtud!");
         } else
-            System.out.println("Pole vabu kohti.");
+            return ("Pole vabu kohti.");
     }
 
     public static void tühistaBroneering(int broneeringuID, List<Broneering> bronnid) {

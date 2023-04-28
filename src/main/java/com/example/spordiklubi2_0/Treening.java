@@ -94,7 +94,7 @@ public abstract class Treening {
 
     }
 
-    public static void soovitaTreeningut(Isik isik, List<Broneering> bronnid, List<Treening> kõikTrennid) { // soovitab isikule personaalselt mingit trenni, kus ta pole käinud või ei oma broneeringut
+    public static String soovitaTreeningut(Isik isik, List<Broneering> bronnid, List<Treening> kõikTrennid) { // soovitab isikule personaalselt mingit trenni, kus ta pole käinud või ei oma broneeringut
         // Leiame kõik juba proovitud trennid
         List<Treening> proovitudTreeningud = new ArrayList<>();
         if (bronnid.size() > 0) {
@@ -118,8 +118,7 @@ public abstract class Treening {
         int võimalikeTrennideArv = proovimataTreeningud.size() > 0 ? proovimataTreeningud.size() : kõikTrennid.size();
 
         int suvaliseTrenniIndeks = (int) (Math.random() * võimalikeTrennideArv);
-        System.out.println("Äkki tahaksid proovida seda uut treeningut: ");
-        System.out.println(proovimataTreeningud.get(suvaliseTrenniIndeks).getNimi());
+        return ("Äkki tahaksid proovida seda uut treeningut: "+proovimataTreeningud.get(suvaliseTrenniIndeks).getNimi());
 
     }
 

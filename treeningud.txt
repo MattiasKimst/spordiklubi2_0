@@ -1,0 +1,5 @@
+personaaltrenn1; 12.04.2023 19.00.00; 12.04.2023 21.00.00; 0; 1; Mati Tamm; klubi1; jõusaal; 30.0; toitumisnõustamine võimalik
+rühmatrenn1; 13.04.2023 19.00.00; 13.04.2023 21.00.00; 5; 20; Mati Tamm; klubi1; saal1; kardio; keskmine; 400
+personaaltrenn2; 12.12.2020 12.00.00; 12.12.2020 14.00.00; 1; 1; madis; klubi3; saal; 50.0; toitumisnõustamine võimalik
+rühmatrenn2; 12.12.2023 17.00.00; 12.12.2023 18.00.00; 9; 15; kaarel; klubi4; saal; kardio; raske; 300
+personaaltrenn3; 28.03.2023 19.00.00; 28.03.2023 21.00.00; 0; 1; Mati Tamm; klubi3; saal; 50.0; toitumisnõustamine võimalik

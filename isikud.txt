@@ -1,0 +1,4 @@
+39912126758; Mart; Mets; mart.mets@gmail.com; 52525252; on liige; 12.09.2022 00.00.00; 12.09.2023 00.00.00
+49812125758; Mari; Mets; mari.mets@gmail.com; 52547652; on liige; 12.08.2021 00.00.00; 12.08.2021 00.00.00
+38912567677; Mati; Tamm; mati.tamm@gmail.com; 97888554; on liige; 30.05.2012 00.00.00; 30.05.2023 00.00.00; 12.09.2015 00.00.00; 12.09.2025 00.00.00; on rühmatreener, on personaaltreener
+60312567677; Kati; Kask; kati.kask@gmail.com; 79087898; pole liige; puudub; puudub; 15.09.2020 00.00.00; 15.09.2024 00.00.00
