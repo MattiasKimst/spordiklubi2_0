@@ -73,6 +73,10 @@ public class Rakendus extends Application {
         Scene stseenAvaleht = new Scene(ruudustik, 500, 500);
 
 
+
+
+
+
         //logimise stseen https://docs.oracle.com/javafx/2/get_started/form.htm
 
         GridPane grid = new GridPane();
@@ -105,6 +109,9 @@ public class Rakendus extends Application {
         logimisHBox.setAlignment(Pos.BOTTOM_RIGHT);
         logimisHBox.getChildren().add(logimisNupp);
         grid.add(logimisHBox, 1, 4);
+
+
+
 
 
         // treeningute kuvamise steen https://jenkov.com/tutorials/javafx/tableview.html
@@ -183,6 +190,8 @@ public class Rakendus extends Application {
 
 
 
+
+
         //Broneeringute kuvamise stseen
         //vaja muuta nii, et näitaks ainult isiku enda broneeringuid
         TableView tableView2 = new TableView();
@@ -221,9 +230,11 @@ public class Rakendus extends Application {
         Scene stseenBroneeringud = new Scene(vbox2, 500, 500);
 
 
+
+
         // soovituse ekraan
 
-
+        soovitaTrenni.setOnMousePressed(sündmus ->{ pealava.setScene(logimisStseen);
         logimisNupp.setOnAction(e ->
                 {
                     for (Liige inimene : isikud
@@ -247,19 +258,73 @@ public class Rakendus extends Application {
                     }
 
 
-                }
+                });
+        }
         );
+
+
+
+
+        //Enda trenide vaatamine
+        kuvaTulevased.setOnMousePressed(sündmus -> {
+                    pealava.setScene(logimisStseen);
+            logimisNupp.setOnAction(e -> {
+
+                TableView tableView3 = new TableView();
+
+                TableColumn<Treening, String> endaTrennideVeerg1 =
+                        new TableColumn<>("Nimi");
+
+                endaTrennideVeerg1.setCellValueFactory(
+                        new PropertyValueFactory<>("nimi"));
+
+
+                TableColumn<Treening, LocalDateTime> endaTrennideveerg2 =
+                        new TableColumn<>("Algusaeg");
+
+                endaTrennideveerg2.setCellValueFactory(
+                        new PropertyValueFactory<>("algusaeg"));
+
+                TableColumn<Treening, LocalDateTime> endaTrennideVeerg3 =
+                        new TableColumn<>("Lõpuaeg");
+
+                endaTrennideVeerg3.setCellValueFactory(
+                        new PropertyValueFactory<>("lõpuaeg"));
+
+                //hetkel kõiki veerge pole veel
+
+                tableView3.getColumns().add(endaTrennideVeerg1);
+                tableView3.getColumns().add(endaTrennideveerg2);
+                tableView3.getColumns().add(endaTrennideVeerg3);
+
+
+                    for (Broneering bronn : broneeringud
+                    ) {
+                        if (bronn.getLiige().getIsikukood().equals(sisestatudIsikukood.getText())) {
+                            tableView3.getItems().add(
+                                    bronn.getTreening());
+                        }
+
+                    }
+
+
+                VBox vbox4 = new VBox(tableView3);
+                Scene stseenEndaTreeningud = new Scene(vbox4, 500, 500);
+                pealava.setScene(stseenEndaTreeningud);
+
+            });
+        });
 
 
         //avaekraani nuppude tegevused
         kuvaTrennid.setOnMousePressed(sündmus -> pealava.setScene(trennideStseen));
         kuvaBronnid.setOnMousePressed(sündmus -> pealava.setScene(stseenBroneeringud));
-        soovitaTrenni.setOnMousePressed(sündmus -> pealava.setScene(logimisStseen));
+
 
 
         pealava.setScene(stseenAvaleht);
         pealava.setTitle("Spordiklubi");
-        pealava.setResizable(false);
+
         pealava.show();
 
 
