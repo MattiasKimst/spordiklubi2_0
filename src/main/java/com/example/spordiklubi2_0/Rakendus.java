@@ -38,6 +38,7 @@ public class Rakendus extends Application {
         int nupuLaius = 100;
         int nupuVahe = 5;
         int laius = 270;
+        Button tagasiNupp = new Button("Tagasi");
 
 
         //avalehe stseen
@@ -101,14 +102,22 @@ public class Rakendus extends Application {
         PasswordField parooliVäli = new PasswordField();
         grid.add(parooliVäli, 1, 2);
 
-        Scene logimisStseen = new Scene(grid, 300, 275);
+
 
 
         Button logimisNupp = new Button("Logi sisse");
+        Button tagasiNuppLogimine = new Button("Tagasi");
+
         HBox logimisHBox = new HBox(10);
+
         logimisHBox.setAlignment(Pos.BOTTOM_RIGHT);
         logimisHBox.getChildren().add(logimisNupp);
+        logimisHBox.getChildren().add(tagasiNuppLogimine);
         grid.add(logimisHBox, 1, 4);
+
+
+
+        Scene logimisStseen = new Scene(grid, 400, 400);
 
 
 
@@ -168,9 +177,13 @@ public class Rakendus extends Application {
                             ) {
                                 if (liige.getIsikukood().equals(sisestatudIsikukood.getText())) {
                                     Label teade = new Label(Broneering.teeBroneering(valitudTrenn.getNimi(), liige, trennid, broneeringud));
+
                                     VBox vbox4 = new VBox(teade); //see koodijupp kordub palju, vaja kuidagi ühe korraga lahendada
+                                    Button tagasinuppTeateStseen = new Button("Tagasi");
+                                    vbox4.getChildren().add(tagasinuppTeateStseen);
                                     Scene TeateStseen = new Scene(vbox4, 500, 500);
                                     pealava.setScene(TeateStseen);
+                                    tagasinuppTeateStseen.setOnMousePressed(sündmus -> pealava.setScene(stseenAvaleht));
                                 }
 
 
@@ -182,6 +195,8 @@ public class Rakendus extends Application {
 
 
         VBox vbox = new VBox(tableView);
+        Button tagasiNuppTrennid = new Button("Tagasi");
+        vbox.getChildren().add(tagasiNuppTrennid);
         Scene trennideStseen = new Scene(vbox, 500, 500);
 
 
@@ -227,6 +242,9 @@ public class Rakendus extends Application {
         }
 
         VBox vbox2 = new VBox(tableView2);
+        Button tagasiNuppBronnid = new Button("Tagasi");
+        vbox2.getChildren().add(tagasiNuppBronnid);
+
         Scene stseenBroneeringud = new Scene(vbox2, 500, 500);
 
 
@@ -250,6 +268,7 @@ public class Rakendus extends Application {
                             Label soovitus = new Label(Treening.soovitaTreeningut(inimene, bronnid, trennid));
 
                             VBox vbox3 = new VBox(soovitus);
+                            vbox3.getChildren().add(tagasiNupp);
                             Scene trenniSoovituseStseen = new Scene(vbox3, 500, 500);
                             pealava.setScene(trenniSoovituseStseen);
 
@@ -309,6 +328,7 @@ public class Rakendus extends Application {
 
 
                 VBox vbox4 = new VBox(tableView3);
+                vbox4.getChildren().add(tagasiNupp);
                 Scene stseenEndaTreeningud = new Scene(vbox4, 500, 500);
                 pealava.setScene(stseenEndaTreeningud);
 
@@ -320,6 +340,11 @@ public class Rakendus extends Application {
         kuvaTrennid.setOnMousePressed(sündmus -> pealava.setScene(trennideStseen));
         kuvaBronnid.setOnMousePressed(sündmus -> pealava.setScene(stseenBroneeringud));
 
+        tagasiNupp.setOnMousePressed(sündmus -> pealava.setScene(stseenAvaleht));
+        tagasiNuppLogimine.setOnMousePressed(sündmus -> pealava.setScene(stseenAvaleht));
+        tagasiNuppTrennid.setOnMousePressed(sündmus -> pealava.setScene(stseenAvaleht));
+        tagasiNuppBronnid.setOnMousePressed(sündmus -> pealava.setScene(stseenAvaleht));
+        
 
 
         pealava.setScene(stseenAvaleht);
