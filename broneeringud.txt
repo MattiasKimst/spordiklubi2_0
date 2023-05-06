@@ -1,3 +1,5 @@
 37; personaaltrenn1; 39912126758
 56; rühmatrenn1; 39912126758
 74; personaaltrenn3; 39912126758
+46; rühmatrenn1; 39912126758
+1; rühmatrenn2; 39912126758

@@ -1,8 +1,6 @@
 package com.example.spordiklubi2_0;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -147,19 +145,18 @@ public class Peaklass {
 
     }
 
-    public static void kirjutaBroneeringudFaili(String failinimi, List<Broneering> broneeringud) {
+    public static void kirjutaBroneeringudFaili(String failinimi, List<Broneering> broneeringud) throws IOException {
 
-        try {
-            FileWriter kirjutaja = new FileWriter(failinimi);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(failinimi), "UTF-8"))) {
+
             for (Broneering bronn : broneeringud
             ) {
-                kirjutaja.write(bronn.failiRida() + "\n");
+                bw.write(bronn.failiRida());
+                bw.newLine();
             }
-            kirjutaja.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+
 
     }
 
