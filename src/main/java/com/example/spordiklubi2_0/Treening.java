@@ -84,7 +84,7 @@ public abstract class Treening {
 
     public static void lisaTreening(List<Treening> trennid, Treening uusTreening) {
         trennid.add(uusTreening);
-        System.out.println("Uus treening " + uusTreening.getNimi() + " lisatud.");
+
     }
 
     public static void eemaldaTreening(String treeninguNimi, List<Treening> trennid) {

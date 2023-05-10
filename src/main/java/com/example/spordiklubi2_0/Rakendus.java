@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -24,6 +25,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -83,7 +85,6 @@ public class Rakendus extends Application {
     }
 
 
-
     @Override
     public void start(Stage pealava) throws IOException {
 
@@ -93,20 +94,14 @@ public class Rakendus extends Application {
         List<Broneering> broneeringud = loeSisseBroneeringud("broneeringud.txt", trennid, isikud);
 
 
-
         //akna suuruse algväärtused
-       int aknaLaius=600;
-       int aknaKõrgus=600;
+        int aknaLaius = 600;
+        int aknaKõrgus = 600;
 
 
         //nupuvahede suurused avalehel
         int nupuVahe = 20;
         int laius = 270;
-
-
-
-
-
 
 
         //logimise stseen idee: https://docs.oracle.com/javafx/2/get_started/form.htm
@@ -150,39 +145,32 @@ public class Rakendus extends Application {
 
         grid.add(logimisHBox, 1, 10);
 
-        Label hoiatus= new Label(""); //kasutame seda, kui isikukood on vale
+        Label hoiatus = new Label(""); //kasutame seda, kui isikukood on vale
         hoiatus.setTextFill(RED);
         grid.add(hoiatus, 1, 13);
 
-        Scene logimisStseen = new Scene(grid, aknaLaius,aknaKõrgus);
+        Scene logimisStseen = new Scene(grid, aknaLaius, aknaKõrgus);
 
 
         final String[] kasutajaIsikukood = new String[1];//java ei lubanud lambda avaldistes lihtsalt String tüüpi muutujat kasutada, seetõttu on String[] tüüpi
         final String[] kasutajaParool = new String[1];
 
 
-         //logimise lõpp
-
-
-
-
-
-
-
+        //logimise lõpp
 
 
         //avalehe stseen
 
         //avalehe nupud
-        Button kuvaBronnid = new Button("Kuva broneeringud");
-        Button kuvaTrennid = new Button("Kuva treeningud");
+
+        Button kuvaTrennid = new Button("Kuva treeningud ja broneeri");
         Button soovitaTrenni = new Button("Soovita treeningut");
         Button kuvaTulevased = new Button("Kuva enda tulevased treeningud");
 
 
         GridPane ruudustik = new GridPane();
 
-        ruudustik.add(kuvaBronnid, 0, 3);
+
         ruudustik.add(kuvaTrennid, 0, 4);
         ruudustik.add(soovitaTrenni, 0, 5);
         ruudustik.add(kuvaTulevased, 0, 6);
@@ -204,20 +192,10 @@ public class Rakendus extends Application {
         ruudustik.setMinWidth(laius);
         ruudustik.setMaxWidth(laius);
 
-        Scene avaleheStseen = new Scene(ruudustik,pealava.getWidth(), pealava.getHeight());
-
+        Scene avaleheStseen = new Scene(ruudustik, pealava.getWidth(), pealava.getHeight());
 
 
         //avalehe lõpp
-
-
-
-
-
-
-
-
-
 
 
         // treeningute kuvamise steen, tabeli loomine lehelt https://jenkov.com/tutorials/javafx/tableview.html
@@ -242,7 +220,6 @@ public class Rakendus extends Application {
 
         veerg3.setCellValueFactory(
                 new PropertyValueFactory<>("lõpuaeg"));
-
 
 
         tableView.getColumns().add(veerg1);
@@ -273,7 +250,7 @@ public class Rakendus extends Application {
                 Liige broneerija = leiaisik(kasutajaIsikukood[0], isikud);
                 String teade = Broneering.teeBroneering(valitudTrenn.getNimi(), broneerija, trennid, broneeringud);
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);//kuvab dialoogiakna slavestamise õnnestumise kohta
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);//kuvab dialoogiakna salvestamise õnnestumise kohta
                 alert.setTitle("Broneerimine");
                 alert.setHeaderText(null);
                 alert.setContentText(teade);
@@ -301,63 +278,6 @@ public class Rakendus extends Application {
         //treeningute kuvamise lõpp
 
 
-
-
-
-
-
-
-
-        //Broneeringute kuvamise stseen
-        TableView tableView2 = new TableView();
-
-        TableColumn<Treening, String> broneeringuVeerg1 =
-                new TableColumn<>("Nimi");
-
-        broneeringuVeerg1.setCellValueFactory(
-                new PropertyValueFactory<>("nimi"));
-
-
-        TableColumn<Treening, LocalDateTime> broneeringuVeerg2 =
-                new TableColumn<>("Algusaeg");
-
-        broneeringuVeerg2.setCellValueFactory(
-                new PropertyValueFactory<>("algusaeg"));
-
-        TableColumn<Treening, LocalDateTime> broneeringuVeerg3 =
-                new TableColumn<>("Lõpuaeg");
-
-        broneeringuVeerg3.setCellValueFactory(
-                new PropertyValueFactory<>("lõpuaeg"));
-
-
-        tableView2.getColumns().add(broneeringuVeerg1);
-        tableView2.getColumns().add(broneeringuVeerg2);
-        tableView2.getColumns().add(broneeringuVeerg3);
-
-        for (int i = 0; i < broneeringud.size(); i++) {
-            tableView2.getItems().add(
-                    broneeringud.get(i).getTreening());
-        }
-
-        VBox vboxBroneeringuteKuvamine = new VBox(tableView2);
-        Button tagasiNuppBronnid = new Button("Tagasi");
-        vboxBroneeringuteKuvamine.getChildren().add(tagasiNuppBronnid);
-
-        Scene stseenBroneeringud = new Scene(vboxBroneeringuteKuvamine, pealava.getWidth(), pealava.getHeight());
-
-
-
-        //broneeringute kuvamise lõpp
-
-
-
-
-
-
-
-
-
         // soovituse stseen
 
 
@@ -368,8 +288,12 @@ public class Rakendus extends Application {
         Label soovitus = new Label(Treening.soovitaTreeningut(inimene, bronnid, trennid));
         soovitus.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 
+        Label juhis = new Label("(Uue soovituse saamiseks vajuta klahvi j )");
+        juhis.setFont(Font.font("Tahoma", FontWeight.NORMAL, 10));
+
         GridPane ruudustikSoovitus = new GridPane();
         ruudustikSoovitus.add(soovitus, 0, 1);
+        ruudustikSoovitus.add(juhis, 0, 3);
 
 
         ruudustikSoovitus.setVgap(nupuVahe);
@@ -379,17 +303,9 @@ public class Rakendus extends Application {
         ruudustikSoovitus.add(tagasiNuppSoovitus, 0, 2);
 
 
-
-
-
-        Scene trenniSoovituseStseen = new Scene(ruudustikSoovitus,pealava.getWidth(),pealava.getHeight());
+        Scene trenniSoovituseStseen = new Scene(ruudustikSoovitus, pealava.getWidth(), pealava.getHeight());
 
         //soovituse stseeni lõpp
-
-
-
-
-
 
 
         //Enda tulevaste broneeringute vaatamise stseen
@@ -419,26 +335,24 @@ public class Rakendus extends Application {
                     new PropertyValueFactory<>("lõpuaeg"));
 
 
-
             tableView3.getColumns().add(endaTrennideVeerg1);
             tableView3.getColumns().add(endaTrennideveerg2);
             tableView3.getColumns().add(endaTrennideVeerg3);
 
-            List<Broneering> isikubronnid=leiaIsikuBronnid(kasutajaIsikukood[0],broneeringud,isikud);
+            List<Broneering> isikubronnid = leiaIsikuBronnid(kasutajaIsikukood[0], broneeringud, isikud);
             for (int i = 0; i < isikubronnid.size(); i++) {
                 Broneering bronn = isikubronnid.get(i);
                 tableView3.getItems().add(bronn.getTreening());
             }
 
 
-
-        VBox vboxKuvaTulevased = new VBox(tableView3);
+            VBox vboxKuvaTulevased = new VBox(tableView3);
             Button tagasiNuppKuvaTulevased = new Button("Tagasi");
             vboxKuvaTulevased.getChildren().add(tagasiNuppKuvaTulevased);
-            Scene stseenEndaTreeningud = new Scene(vboxKuvaTulevased, pealava.getWidth(),pealava.getHeight());
+            Scene stseenEndaTreeningud = new Scene(vboxKuvaTulevased, pealava.getWidth(), pealava.getHeight());
 
             final int lavaLaius = (int) pealava.getWidth();
-            final int lavaKõrgus =(int) pealava.getHeight();
+            final int lavaKõrgus = (int) pealava.getHeight();
 
             pealava.setScene(stseenEndaTreeningud);
             pealava.setWidth(lavaLaius);
@@ -447,113 +361,94 @@ public class Rakendus extends Application {
 
             tagasiNuppKuvaTulevased.setOnMousePressed(sündmus2 -> {
 
-                pealava.setScene(avaleheStseen); });
+                pealava.setScene(avaleheStseen);
+            });
 
         });
         //enda tulevaste vaatamise stseeni lõpp
-
-
-
-
-
-
 
 
         //logimisnupu vajutamise tegevused:
 
         logimisNupp.setOnMousePressed(sündmus -> {
 
-            if (tuvastaInimene(isikukoodiVäli.getText(),isikud)){//meetod tuvastainimene tagastab true, kui vastav isikukood kuulub mõnele liikmele
-                kasutajaIsikukood[0] = isikukoodiVäli.getText();//kasutajaisikukoodis hoiame läbivalt isikukoodi, mille saime logimisel, String[] tüüpi pikkusega üks, sest lambda avaldistes tavaline String ei saa olla
-                kasutajaParool[0] = parooliVäli.getText();//salvestame siia lihtsalt paroolivälja info, midagi sellega peale ei hakka
+            try {
+                if (tuvastaInimene(isikukoodiVäli.getText(), isikud)) {//meetod tuvastainimene tagastab true, kui vastav isikukood kuulub mõnele liikmele
+                    kasutajaIsikukood[0] = isikukoodiVäli.getText();//kasutajaisikukoodis hoiame läbivalt isikukoodi, mille saime logimisel, String[] tüüpi pikkusega üks, sest lambda avaldistes tavaline String ei saa olla
+                    kasutajaParool[0] = parooliVäli.getText();//salvestame siia lihtsalt paroolivälja info, midagi sellega peale ei hakka
 
 
-                //jätame enne stseeni vahetamist meelde eelneva aknasuuruse ja peale stseeni vahetamist kanname selle uuele stseenile üle,
-                //muidu kui muuta mingi stseeni jookul akna suurust, siis stseenivahetusel taastub algväärtus, paremat võimalust selle lahendamiseks ei leidnud
-                final int lavaLaius = (int) pealava.getWidth();
-                final int lavaKõrgus =(int) pealava.getHeight();
-                pealava.setScene(avaleheStseen);
-                pealava.setWidth(lavaLaius);
-                pealava.setHeight(lavaKõrgus);
+                    //jätame enne stseeni vahetamist meelde eelneva aknasuuruse ja peale stseeni vahetamist kanname selle uuele stseenile üle,
+                    //muidu kui muuta mingi stseeni jookul akna suurust, siis stseenivahetusel taastub algväärtus, paremat võimalust selle lahendamiseks ei leidnud
+                    final int lavaLaius = (int) pealava.getWidth();
+                    final int lavaKõrgus = (int) pealava.getHeight();
+                    pealava.setScene(avaleheStseen);
+                    pealava.setWidth(lavaLaius);
+                    pealava.setHeight(lavaKõrgus);
 
 
+                } else {
+                    throw new ValeVõiViganeIsikukood("Vigane isikukood või ei ole sellise isikukoodiga liiget"); //kui liikmete seas pole vastavat isikukoodi, viskame erindi
+
+                }
+            } catch (ValeVõiViganeIsikukood e) {
+                hoiatus.setText(e.getMessage());
             }
-            else {
-                hoiatus.setText("Vigane isikukood või ei ole sellise isikukoodiga liiget");//kui liikmete seas pole vastavat isikukoodi, viskame erindi
 
-            }
         });
-
-
 
 
         //avaekraani nuppude tegevused
 
 
-        kuvaTrennid.setOnMousePressed(sündmus ->{
+        kuvaTrennid.setOnMousePressed(sündmus -> {
             //jätame enne stseeni vahetamist meelde eelneva aknasuuruse ja peale stseeni vahetamist kanname selle uuele stseenile üle,
             //muidu kui muuta mingi stseeni jookul akna suurust, siis stseenivahetusel taastub algväärtus, paremat võimalust selle lahendamiseks ei leidnud
             final int lavaLaius = (int) pealava.getWidth();
-            final int lavaKõrgus =(int) pealava.getHeight();
+            final int lavaKõrgus = (int) pealava.getHeight();
             pealava.setScene(trennideStseen);
             pealava.setWidth(lavaLaius);
             pealava.setHeight(lavaKõrgus);
         });
 
 
-
-        kuvaBronnid.setOnMousePressed(sündmus -> {
-            final int lavaLaius = (int) pealava.getWidth();
-            final int lavaKõrgus =(int) pealava.getHeight();
-
-            pealava.setScene(stseenBroneeringud);
-            pealava.setWidth(lavaLaius);
-            pealava.setHeight(lavaKõrgus);
-
-        });
-
-
         soovitaTrenni.setOnMousePressed(sündmus -> {
 
             final int lavaLaius = (int) pealava.getWidth();
-            final int lavaKõrgus =(int) pealava.getHeight();
+            final int lavaKõrgus = (int) pealava.getHeight();
 
             pealava.setScene(trenniSoovituseStseen);
             pealava.setWidth(lavaLaius);
             pealava.setHeight(lavaKõrgus);
-        });
 
+        });
 
 
         tagasiNuppTrennid.setOnMousePressed(sündmus -> {
 
             final int lavaLaius = (int) pealava.getWidth();
-            final int lavaKõrgus =(int) pealava.getHeight();
+            final int lavaKõrgus = (int) pealava.getHeight();
 
             pealava.setScene(avaleheStseen);
             pealava.setWidth(lavaLaius);
-            pealava.setHeight(lavaKõrgus);});
-
-
-        tagasiNuppBronnid.setOnMousePressed(sündmus -> {
-
-            final int lavaLaius = (int) pealava.getWidth();
-            final int lavaKõrgus =(int) pealava.getHeight();
-
-            pealava.setScene(avaleheStseen);
-            pealava.setWidth(lavaLaius);
-            pealava.setHeight(lavaKõrgus); });
-
+            pealava.setHeight(lavaKõrgus);
+        });
 
 
         tagasiNuppSoovitus.setOnMousePressed(sündmus -> {
             final int lavaLaius = (int) pealava.getWidth();
-            final int lavaKõrgus =(int) pealava.getHeight();
+            final int lavaKõrgus = (int) pealava.getHeight();
 
             pealava.setScene(avaleheStseen);
             pealava.setWidth(lavaLaius);
-            pealava.setHeight(lavaKõrgus); });
+            pealava.setHeight(lavaKõrgus);
+        });
 
+        trenniSoovituseStseen.setOnKeyPressed(sündmus -> { //uue soovituse genereerimine klahvivajutusel
+            if (sündmus.getCode() == KeyCode.J) {
+                soovitus.setText(Treening.soovitaTreeningut(inimene, bronnid, trennid));
+            }
+        });
 
 
         pealava.setScene(logimisStseen);
@@ -562,9 +457,7 @@ public class Rakendus extends Application {
         pealava.show();
 
 
-
-
-       pealava.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        pealava.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 //lõpus kirjutab  broneeringute järjendite lõppseisu peale programmi tööd failidesse
@@ -592,7 +485,6 @@ public class Rakendus extends Application {
                 System.exit(0);
             }
         });
-
 
 
     }
